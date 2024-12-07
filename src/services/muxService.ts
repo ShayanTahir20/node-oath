@@ -25,14 +25,18 @@ export const uploadVideoToMux = async (
       test: false,
     });
 
-    const muxData = await prisma.muxData.create({
-      data: {
-        chapterId: chapterId,
+    const muxData = await prisma.muxData.upsert({
+      where: { chapterId },
+      update: {
+        assetId: asset.id,
+        playbackId: asset.playback_ids?.[0]?.id,
+      },
+      create: {
+        chapterId,
         assetId: asset.id,
         playbackId: asset.playback_ids?.[0]?.id,
       },
     });
-
     return muxData;
   } catch (error: any) {
     throw new Error(`Error uploading to Mux: ${error.message}`);
