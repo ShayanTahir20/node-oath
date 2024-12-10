@@ -63,13 +63,12 @@ class AuthService {
                 id: user.id,
                 name: user.name,
                 emailVerified: user.emailVerified,
-                image: user.image,
                 email: user.email,
                 userType: user.userType,
                 role: user.role,
             };
             const accessToken = jsonwebtoken_1.default.sign(payload, config_1.config.JWT_SECRET, {
-                expiresIn: "604800",
+                expiresIn: "1209600",
             });
             return { accessToken };
         });
@@ -83,7 +82,7 @@ class AuthService {
                 if (!user) {
                     return null;
                 }
-                return { hasPassword: !!user.password };
+                return Object.assign({ hasPassword: !!user.password }, user);
             }
             catch (error) {
                 console.error("Error in getUserById service:", error);
