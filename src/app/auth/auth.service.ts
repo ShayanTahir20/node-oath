@@ -80,7 +80,7 @@ export class AuthService {
     };
 
     const accessToken = jwt.sign(payload, config.JWT_SECRET, {
-      expiresIn: "1209600",
+      expiresIn: "7d",
     });
 
     return { accessToken };
